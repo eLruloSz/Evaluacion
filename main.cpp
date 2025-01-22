@@ -19,9 +19,22 @@ int dijkstra(vector<vector<int>> &matriz, int letra){
     int n = matriz.size();
     vector<int> caminoCorto(n,99999);
     vector<bool> nodos(n,0);
-    
-
+    caminoCorto[0] = 0;
+    nodos[0] = 1;
+    for(int i = 0; i < n; i++){
+        for(int j = 1; j < n; j++){
+            if(matriz[i][j] != 0){
+                int peso = matriz[i][j];
+                if(caminoCorto[i] + peso < caminoCorto[j]){
+                    caminoCorto[j] = caminoCorto[i] + peso;
+                }
+            }
+            
+        }
+    }
+    return numCorto;
 }
+
 
 
 void imprimirMatriz(vector<vector<int>> &matriz, int filas, int col){
@@ -56,14 +69,12 @@ int main(){
         while(getline(ss,parte,',')){
             int peso = stoi(parte);
             matrizAdy[i][j] = peso;
-
+            if(i == j){
+                matrizAdy[i][j] = 0;
+            }
             j++;
         }
     }
-
-
-
-   
     
     return 0;
 }
