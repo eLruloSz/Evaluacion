@@ -49,12 +49,11 @@ vector<int> dijkstra(vector<vector<int>> &matriz){
 
 
 
-void imprimirNodos(queue<int> nodo){
+void imprimirNodos(int n){
     queue<char> nodos;
     cout<<"Los nodos presentes son: ";
-    while(!nodo.empty()){
-        nodos.push(nodo.front() + 65);
-        nodo.pop();
+    for(int i = 0; i < n; i++){
+        nodos.push(i+65);
     }
     while(!nodos.empty()){
         cout<<nodos.front()<<" ";
@@ -110,7 +109,7 @@ int main(){
         }
     }
 
-    imprimirNodos(nodos);
+    imprimirNodos(n);
     cout<<endl;
     vector<int> caminoCorto = dijkstra(matrizAdy);
     char nodoFin;
