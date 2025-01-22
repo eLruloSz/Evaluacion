@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 #include <utility>
+#include <queue>
 using namespace std;
 
 class Nodo{
@@ -35,8 +36,7 @@ int dijkstra(vector<vector<int>> &matriz){
                 if(caminoCorto[i] + peso < caminoCorto[j]){
                     caminoCorto[j] = caminoCorto[i] + peso;
                 }
-            }
-            
+            }      
         }
     }
 
@@ -44,6 +44,17 @@ int dijkstra(vector<vector<int>> &matriz){
     return numCorto;
 }
 
+void imprimirNodos(queue<int> nodo){
+    queue<char> nodos;
+    while(!nodo.empty()){
+        nodos.push(nodo.front() + 65);
+        nodo.pop();
+    }
+    while(!nodos.empty()){
+        cout<<nodos.front()<<" ";
+        nodos.pop();
+    }
+}
 
 
 void imprimirMatriz(vector<vector<int>> &matriz, int filas, int col){
@@ -68,8 +79,9 @@ int main(){
     int n = stoi(primeraLinea);
 
     vector<vector<int>> matrizAdy(n,vector<int>(n));
-
+    int contador = 0;
     string linea;
+    queue<int> nodos;
     for(int i = 0; i < n; i++){
         getline(archivo,linea);
         stringstream ss(linea);
@@ -81,11 +93,14 @@ int main(){
             if(i == j){
                 matrizAdy[i][j] = 0;
             }
+            if(matrizAdy[i][j] != 0){
+                nodos.push(contador);
+                contador++;
+            }
             j++;
         }
     }
 
-    int a = dijkstra(matrizAdy);
-    
+    imprimirNodos(nodos);
     return 0;
 }
