@@ -14,13 +14,20 @@ class Nodo{
     
 };
 
-int dijkstra(vector<vector<int>> &matriz, int letra){
+
+void imprimirVect(vector<int> v){
+    for(int i = 0; i < v.size(); i++){
+        cout<<v[i]<<" ";
+    }
+}
+
+int dijkstra(vector<vector<int>> &matriz){
     int numCorto = 0;
     int n = matriz.size();
     vector<int> caminoCorto(n,99999);
     vector<bool> nodos(n,0);
     caminoCorto[0] = 0;
-    nodos[0] = 1;
+    
     for(int i = 0; i < n; i++){
         for(int j = 1; j < n; j++){
             if(matriz[i][j] != 0){
@@ -32,6 +39,8 @@ int dijkstra(vector<vector<int>> &matriz, int letra){
             
         }
     }
+
+    imprimirVect(caminoCorto);
     return numCorto;
 }
 
@@ -75,6 +84,8 @@ int main(){
             j++;
         }
     }
+
+    int a = dijkstra(matrizAdy);
     
     return 0;
 }
