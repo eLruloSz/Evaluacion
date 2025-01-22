@@ -5,11 +5,12 @@
 #include <sstream>
 using namespace std;
 
-void imprimirMatriz(int matriz[6][6]){
-    for(int i = 0; i < 6; i++){
-        for(int j = 0; j < 6;j++){
-            cout<<matriz[i][j]<<endl;
+void imprimirMatriz(vector<vector<int>> &matriz, int filas, int col){
+    for(int i = 0; i < filas; i++){
+        for(int j = 0; j < col;j++){
+            cout<<matriz[i][j]<<" ";
         }
+        cout<<endl;
     }
 }
 
@@ -24,20 +25,21 @@ int main(){
     getline(archivo,primeraLinea);
     int n = stoi(primeraLinea);
 
-    int matrizAdy[n][n];
+    vector<vector<int>> matrizAdy(n,vector<int>(n));
+
     string linea;
     for(int i = 0; i < n; i++){
-        for(int j = 0; j < n; j++){
-            getline(archivo,linea);
-            stringstream ss(linea);
-            string parte;
-            getline(ss,parte,',');
-                int peso = stoi(parte);
-                matrizAdy[i][j] = peso;
-                
+        getline(archivo,linea);
+        stringstream ss(linea);
+        string parte;
+        int j = 0;
+        while(getline(ss,parte,',')){
+            int peso = stoi(parte);
+            matrizAdy[i][j] = peso;
+            j++;
         }
     }
-    imprimirMatriz(matrizAdy);
+    imprimirMatriz(matrizAdy,n,n);
     
     return 0;
 }
