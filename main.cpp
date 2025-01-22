@@ -3,7 +3,26 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <utility>
 using namespace std;
+
+class Nodo{
+   public:
+    pair<char,int> nodo;
+    vector<Nodo*> sig;
+    Nodo(char letra, int peso) : nodo(letra,peso){}
+    
+};
+
+int dijkstra(vector<vector<int>> &matriz, int letra){
+    int numCorto = 0;
+    int n = matriz.size();
+    vector<int> caminoCorto(n,99999);
+    vector<bool> nodos(n,0);
+    
+
+}
+
 
 void imprimirMatriz(vector<vector<int>> &matriz, int filas, int col){
     for(int i = 0; i < filas; i++){
@@ -13,6 +32,7 @@ void imprimirMatriz(vector<vector<int>> &matriz, int filas, int col){
         cout<<endl;
     }
 }
+
 
 
 int main(){
@@ -36,10 +56,14 @@ int main(){
         while(getline(ss,parte,',')){
             int peso = stoi(parte);
             matrizAdy[i][j] = peso;
+
             j++;
         }
     }
-    imprimirMatriz(matrizAdy,n,n);
+
+
+
+   
     
     return 0;
 }
