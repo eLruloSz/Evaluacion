@@ -54,7 +54,7 @@ void imprimirNodos(queue<int> nodo){
     cout<<"Los nodos presentes son: ";
     while(!nodo.empty()){
         nodos.push(nodo.front() + 65);
-        
+        nodo.pop();
     }
     while(!nodos.empty()){
         cout<<nodos.front()<<" ";
