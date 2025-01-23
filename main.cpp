@@ -18,15 +18,16 @@ class Nodo{
     
 };
 
-vector<Nodo*> arbol;
-vector<Nodo*> arbol2;
+
 vector<int> dijkstra(vector<vector<int>> &matriz){
     int n = matriz.size();
-    
+    vector<Nodo*> arbol(n);
+    for(int i = 0; i < n; i++){
+        arbol[i] = nullptr;
+    }
     vector<int> caminoCorto(n,99999);
     vector<int> nodos(n,-1);
     caminoCorto[0] = 0;
-    arbol.resize(n, nullptr);
     arbol[0] = new Nodo(65, 0);
     for(int i = 0; i < n; i++){
         for(int j = 0; j < n; j++){
@@ -48,7 +49,6 @@ vector<int> dijkstra(vector<vector<int>> &matriz){
 
 vector<int> dijkstra2(vector<vector<int>> &matriz){
     int n = matriz.size();
-    
     vector<int> caminoCorto(n,99999);
     caminoCorto[0] = 0;
     for(int i = 0; i < n; i++){
@@ -65,6 +65,10 @@ vector<int> dijkstra2(vector<vector<int>> &matriz){
 }
 
 void imprimirCamino(vector<int>& nodos, int nodoFinal) {
+    if(nodos.size() <= nodoFinal){
+        cout<<"No se encontró el nodo"<<endl;
+        return;
+    }
     stack<int> camino;
     int actual = nodoFinal;
 
@@ -108,7 +112,6 @@ int main(){
     vector<vector<int>> matrizAdy(n,vector<int>(n));
     int contador = 0;
     string linea;
-    queue<int> nodos;
 
     for(int i = 0; i < n; i++){
         getline(archivo,linea);
@@ -122,23 +125,29 @@ int main(){
                 //pa los ciclos
                 matrizAdy[i][j] = 0;
             }
-            if(matrizAdy[i][j] != 0){
-                nodos.push(contador);
-                contador++;
-            }
             j++;
         }
     }
 
     imprimirNodos(n);
     cout<<endl;
+    //este dijkstra es para construir el arbol
     vector<int> nodosCaminoCorto = dijkstra(matrizAdy);
+    //este dijkstra es para guardar el vector de los caminosCortos
     vector<int> caminoCorto = dijkstra2(matrizAdy);
+    
+    
     char nodoFin;
-    cout<<"Ponga el nodo a llegar: ";
-    cin>>nodoFin; 
-
-
+    while(true){
+        cout<<"Ponga el nodo a llegar(Mayusculas): ";
+        cin>>nodoFin;
+        if(nodoFin < 65 || nodoFin > 90){
+            cout<<"Carácter inválido"<<endl;
+        }else{
+            break;
+        }
+    }
+            
     int nodoFinInt = nodoFin - 65;
 
     for(int i = 0; i < caminoCorto.size(); i++){
