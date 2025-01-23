@@ -137,11 +137,15 @@ int main(){
     cout<<"Ponga el nodo a llegar: ";
     cin>>nodoFin; 
 
+
     int nodoFinInt = nodoFin - 65;
+    if(nodoFinInt < 65 || nodoFinInt > 90){
+        cout<<"carácter inválido";
+        
+        }
     for(int i = 0; i < caminoCorto.size(); i++){
         if(nodoFinInt == i){
             cout<<"El valor total del camino más corto: "<<caminoCorto[i]<<endl;
-
         }
     }
     
