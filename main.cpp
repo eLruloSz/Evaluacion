@@ -82,7 +82,6 @@ void imprimirCamino(vector<int>& nodos, int nodoFinal) {
     cout<<endl;
 }
 
-
 void imprimirNodos(int n){
     queue<char> nodos;
     cout<<"Los nodos presentes son: ";
@@ -95,7 +94,6 @@ void imprimirNodos(int n){
     }
 }
 
-
 int main(){
     ifstream archivo("matrizEjemplo.txt");
     if(!archivo){
@@ -105,7 +103,6 @@ int main(){
     string primeraLinea;
     getline(archivo,primeraLinea);
     int n = stoi(primeraLinea);
-    
 
     vector<vector<int>> matrizAdy(n,vector<int>(n));
     int contador = 0;
@@ -148,7 +145,6 @@ int main(){
         }
     }
     
-
    imprimirCamino(nodosCaminoCorto,nodoFinInt);
 
     return 0;
