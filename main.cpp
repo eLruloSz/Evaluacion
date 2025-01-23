@@ -19,6 +19,7 @@ class Nodo{
 };
 
 vector<Nodo*> arbol;
+vector<Nodo*> arbol2;
 vector<int> dijkstra(vector<vector<int>> &matriz){
     int n = matriz.size();
     
@@ -28,7 +29,7 @@ vector<int> dijkstra(vector<vector<int>> &matriz){
     arbol.resize(n, nullptr);
     arbol[0] = new Nodo(65, 0);
     for(int i = 0; i < n; i++){
-        for(int j = 1; j < n; j++){
+        for(int j = 0; j < n; j++){
             if(matriz[i][j] != 0){
                 int peso = matriz[i][j];  
                 if(caminoCorto[i] + peso < caminoCorto[j]){
@@ -139,10 +140,7 @@ int main(){
 
 
     int nodoFinInt = nodoFin - 65;
-    if(nodoFinInt < 65 || nodoFinInt > 90){
-        cout<<"carácter inválido";
-        
-        }
+
     for(int i = 0; i < caminoCorto.size(); i++){
         if(nodoFinInt == i){
             cout<<"El valor total del camino más corto: "<<caminoCorto[i]<<endl;
