@@ -5,48 +5,82 @@
 #include <sstream>
 #include <utility>
 #include <queue>
+#include <stack>
 using namespace std;
 
 class Nodo{
    public:
-    pair<char,int> nodo;
-    vector<Nodo*> vecinos;
-    Nodo(char letra, int peso){
-        nodo = make_pair(letra,peso);
+    char letra;
+    int peso;
+    vector<Nodo*> hijos;
+    Nodo(char letra, int peso) : letra(letra), peso(peso){
     }
     
 };
 
-
-void imprimirVect(vector<Nodo*> v){
-    for(int i = 0; i < v.size(); i++){
-        cout<<v[i]->nodo.first<<" ";
-    }
-}
-
+vector<Nodo*> arbol;
 vector<int> dijkstra(vector<vector<int>> &matriz){
     int n = matriz.size();
+    
     vector<int> caminoCorto(n,99999);
-    vector<bool> nodos(n,0);
+    vector<int> nodos(n,-1);
     caminoCorto[0] = 0;
-    vector<Nodo*> arbol;
+    arbol.resize(n, nullptr);
+    arbol[0] = new Nodo(65, 0);
     for(int i = 0; i < n; i++){
         for(int j = 1; j < n; j++){
             if(matriz[i][j] != 0){
-                int peso = matriz[i][j];
-                nodos[j] = 1;
+                int peso = matriz[i][j];  
                 if(caminoCorto[i] + peso < caminoCorto[j]){
                     caminoCorto[j] = caminoCorto[i] + peso;
-                    Nodo* n = new Nodo(i+65,caminoCorto[i]);
-                    nodos.push_back(n);
+                    nodos[j] = i;
+                    if (!arbol[j]) {
+                        arbol[j] = new Nodo(j+65, caminoCorto[j]);
+                    }
+                    arbol[i]->hijos.push_back(arbol[j]);              
                 }
             }      
         }
     }
+    return nodos;
+}
 
+vector<int> dijkstra2(vector<vector<int>> &matriz){
+    int n = matriz.size();
+    
+    vector<int> caminoCorto(n,99999);
+    caminoCorto[0] = 0;
+    for(int i = 0; i < n; i++){
+        for(int j = 1; j < n; j++){
+            if(matriz[i][j] != 0){
+                int peso = matriz[i][j];  
+                if(caminoCorto[i] + peso < caminoCorto[j]){
+                    caminoCorto[j] = caminoCorto[i] + peso;                         
+                }
+            }      
+        }
+    }
     return caminoCorto;
 }
 
+void imprimirCamino(vector<int>& nodos, int nodoFinal) {
+    stack<int> camino;
+    int actual = nodoFinal;
+
+    while(actual != -1){
+        camino.push(actual);
+        actual = nodos[actual];
+    }
+    while(!camino.empty()){
+        char nodo = camino.top() + 65;
+        cout<<nodo;
+        camino.pop();
+        if(!camino.empty()){
+            cout<<"->";
+        }
+    }
+    cout<<endl;
+}
 
 
 void imprimirNodos(int n){
@@ -60,17 +94,6 @@ void imprimirNodos(int n){
         nodos.pop();
     }
 }
-
-
-void imprimirMatriz(vector<vector<int>> &matriz, int filas, int col){
-    for(int i = 0; i < filas; i++){
-        for(int j = 0; j < col;j++){
-            cout<<matriz[i][j]<<" ";
-        }
-        cout<<endl;
-    }
-}
-
 
 
 int main(){
@@ -111,7 +134,8 @@ int main(){
 
     imprimirNodos(n);
     cout<<endl;
-    vector<int> caminoCorto = dijkstra(matrizAdy);
+    vector<int> nodosCaminoCorto = dijkstra(matrizAdy);
+    vector<int> caminoCorto = dijkstra2(matrizAdy);
     char nodoFin;
     cout<<"Ponga el nodo a llegar: ";
     cin>>nodoFin; 
@@ -120,9 +144,12 @@ int main(){
     for(int i = 0; i < caminoCorto.size(); i++){
         if(nodoFinInt == i){
             cout<<"El valor total del camino más corto: "<<caminoCorto[i]<<endl;
+
         }
-    } 
+    }
     
+
+   imprimirCamino(nodosCaminoCorto,nodoFinInt);
 
     return 0;
 }
